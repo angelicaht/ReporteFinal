@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros | Angel's Beauty</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="nosotros-page">
+
+<!-- Navegación Superior -->
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Angel's Beauty</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/nosotros}" class="active-link">Nosotros</a></li>
+        <li th:if="${session.usuarioLogueado != null and session.usuarioLogueado.idRol == 1}">
+            <a th:href="@{/maquillaje}">Maquillaje</a>
+        </li>
+        <li><a th:href="@{/ofertas}">Ofertas</a></li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Contacto ▾</a>
+            <div class="dropdown-content">
+                <a href="https://wa.me/5219611234567" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+            </div>
+        </li>
+    </ul>
+
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <a th:href="@{/carrito}" class="login-icon" style="text-decoration: none;" title="Ver Carrito">🛒</a>
+        <a th:if="${session.usuarioLogueado == null}" th:href="@{/login}" class="login-icon" style="text-decoration: none;" title="Iniciar Sesión">👤</a>
+        <a th:if="${session.usuarioLogueado != null and session.usuarioLogueado.idRol == 1}" th:href="@{/maquillaje}" style="color: #FF1694; font-weight: bold; text-decoration: none;">+ ADMIN</a>
+        <a th:if="${session.usuarioLogueado != null}" th:href="@{/logout}" style="color: #d9534f; font-weight: bold; text-decoration: none;">SALIR</a>
+    </div>
+</nav>
+
+<!-- Sección Principal: Por Qué Creamos Esta Página -->
+<main class="why-us-section">
+
+    <header class="why-us-header">
+        <h1>POR QUÉ CREAMOS ESTA PÁGINA</h1>
+        <div class="avatar-badge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Creadora">
+        </div>
+    </header>
+
+    <div class="cards-container">
+
+        <!-- Tarjeta 1 -->
+        <article class="why-card">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500');"></div>
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <span>🏅</span>
+                </div>
+                <h2>1. OFRECER PRODUCTOS DE ALTA CALIDAD Y RENDIMIENTO</h2>
+                <p>Nacimos de un compromiso para ofrecer la mejor selección de maquillaje de alta calidad y rendimiento. Buscamos y validamos rigurosamente cada marca y producto, asegurando que cumplan con nuestros estándares éticos y de rendimiento, para que tú no tengas que hacerlo.</p>
+            </div>
+        </article>
+
+        <!-- Tarjeta 2 -->
+        <article class="why-card">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500');"></div>
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <span>🤝</span>
+                </div>
+                <h2>2. GARANTIZAR UNA COMPRA SEGURA Y TRANSPARENTE</h2>
+                <p>Nuestra curación se enfoca exclusivamente en marcas que ofrecen total transparencia en sus ingredientes. Verificamos la legitimidad de cada producto y vendedor para garantizar que tus compras sean seguras, auténticas y con total tranquilidad.</p>
+            </div>
+        </article>
+
+        <!-- Tarjeta 3 -->
+        <article class="why-card">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500');"></div>
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <span>👥</span>
+                </div>
+                <h2>3. CREAR UNA COMUNIDAD INCLUSIVA Y SEGURA</h2>
+                <p>Fomentamos una comunidad diversa donde todos se sientan bienvenidos, representados y celebrados. Creemos que la belleza auténtica debe ser para todos, y nuestra selección refleja esa diversidad en tonos, tipos de piel y estilos, creando un espacio seguro para tu autoexpresión.</p>
+            </div>
+        </article>
+
+    </div>
+</main>
+
+<!-- Pie de Página Personalizado de la Sección -->
+<footer class="sub-footer">
+    <div class="footer-left">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📷 @ANGELSBEAUTY_MX</a>
+    </div>
+    <div class="footer-right">
+        <a th:href="@{/nosotros}">Nosotros</a>
+        <a href="https://wa.me/5219611234567" target="_blank">Contacto</a>
+        <a href="#">Privacidad</a>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel's | Beauty & Cosmetics</title>
+
+    <!-- Vinculación al CSS -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<!-- Navegación Conectada con Desplegable -->
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Angel's Beauty</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/nosotros}">Nosotros</a></li>
+
+        <!-- Visible solo para Admin (idRol == 1) -->
+        <li th:if="${session.usuarioLogueado != null and session.usuarioLogueado.idRol == 1}">
+            <a th:href="@{/maquillaje}">Maquillaje</a>
+        </li>
+
+        <li><a th:href="@{/ofertas}">Ofertas</a></li>
+
+        <!-- Contacto con menú desplegable -->
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Contacto ▾</a>
+            <div class="dropdown-content">
+                <a href="https://wa.me/5219611234567" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Carrito y Gestión de Sesión -->
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <a th:href="@{/carrito}" class="login-icon" style="text-decoration: none;" title="Ver Carrito">🛒</a>
+
+        <!-- Muestra icono de login si no hay sesión -->
+        <a th:if="${session.usuarioLogueado == null}" th:href="@{/login}" class="login-icon" style="text-decoration: none;" title="Iniciar Sesión">👤</a>
+
+        <!-- Muestra acceso al Panel Admin si es Admin (idRol == 1) -->
+        <a th:if="${session.usuarioLogueado != null and session.usuarioLogueado.idRol == 1}" th:href="@{/maquillaje}" style="color: #FF1694; font-weight: bold; text-decoration: none;">+ ADMIN</a>
+
+        <!-- Muestra opción de Cerrar Sesión si hay un usuario activo -->
+        <a th:if="${session.usuarioLogueado != null}" th:href="@{/logout}" style="color: #d9534f; font-weight: bold; text-decoration: none;">SALIR</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Brilla con <span>Actitud</span> y Estilo.</h1>
+        <p>Cosméticos de alta gama para resaltar tu belleza única. Te lo mereces todo.</p>
+        <a th:href="@{#catalogo}" class="cta-btn">Ver Colección</a>
+    </div>
+</section>
+
+<!-- Catálogo de Productos Ampliado -->
+<section class="products" id="catalogo">
+    <h2 class="section-title">Nuestros Favoritos</h2>
+
+    <div class="product-grid">
+
+        <!-- Producto 1: Labial Matte -->
+        <div class="product-card">
+            <img th:src="@{/images/images.jpg}" alt="Labial Matte Hot Pink" src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=600">
+            <h3>Labial Matte Hot Pink</h3>
+            <p class="price">$18.99</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="1">
+                <input type="hidden" name="nombre" value="Labial Matte Hot Pink">
+                <input type="hidden" name="precio" value="18.99">
+                <input type="hidden" name="imagen" value="/images/images.jpg">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 2: Paleta de Sombras -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=600" alt="Paleta de Sombras Angel Glow">
+            <h3>Paleta Angel Glow</h3>
+            <p class="price">$32.50</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="2">
+                <input type="hidden" name="nombre" value="Paleta Angel Glow">
+                <input type="hidden" name="precio" value="32.50">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 3: Rubor Líquido -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600" alt="Rubor Liquid Icon">
+            <h3>Rubor Liquid Icon</h3>
+            <p class="price">$22.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="3">
+                <input type="hidden" name="nombre" value="Rubor Liquid Icon">
+                <input type="hidden" name="precio" value="22.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 4: Polvo Compacto Bissú -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600" alt="Polvo Compacto Bissú">
+            <h3>Polvo Compacto Bissú</h3>
+            <p class="price">$89.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="4">
+                <input type="hidden" name="nombre" value="Polvo Compacto Bissú">
+                <input type="hidden" name="precio" value="89.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 5: Plumín Delineador Matte -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?q=80&w=600" alt="Plumín Delineador Matte">
+            <h3>Plumín Delineador Matte</h3>
+            <p class="price">$78.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="5">
+                <input type="hidden" name="nombre" value="Plumín Delineador Matte">
+                <input type="hidden" name="precio" value="78.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 6: Corrector Líquido -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=600" alt="Corrector Líquido HD">
+            <h3>Corrector Líquido HD</h3>
+            <p class="price">$62.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="6">
+                <input type="hidden" name="nombre" value="Corrector Líquido HD">
+                <input type="hidden" name="precio" value="62.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 7: Iluminador Compacto -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1631730486784-5456119f69ae?q=80&w=600" alt="Iluminador Glow Star">
+            <h3>Iluminador Glow Star</h3>
+            <p class="price">$68.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="7">
+                <input type="hidden" name="nombre" value="Iluminador Glow Star">
+                <input type="hidden" name="precio" value="68.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1631730486784-5456119f69ae?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 8: Esmalte Bissú Color Pink -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" alt="Esmalte Bissú Color Pink">
+            <h3>Esmalte Bissú Color Pink</h3>
+            <p class="price">$35.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="8">
+                <input type="hidden" name="nombre" value="Esmalte Bissú Color Pink">
+                <input type="hidden" name="precio" value="35.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 9: Lápiz Defined Eyebrow -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1597225244660-1cd128c64284?q=80&w=600" alt="Lápiz Defined Eyebrow">
+            <h3>Lápiz Defined Eyebrow</h3>
+            <p class="price">$48.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="9">
+                <input type="hidden" name="nombre" value="Lápiz Defined Eyebrow">
+                <input type="hidden" name="precio" value="48.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1597225244660-1cd128c64284?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- Producto 10: Tinta Matte Intensa -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600" alt="Tinta Matte Intensa">
+            <h3>Tinta Matte Intensa</h3>
+            <p class="price">$75.00</p>
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" value="10">
+                <input type="hidden" name="nombre" value="Tinta Matte Intensa">
+                <input type="hidden" name="precio" value="75.00">
+                <input type="hidden" name="imagen" value="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+        </div>
+
+        <!-- PRODUCTOS NUEVOS GUARDADOS EN MYSQL -->
+        <div class="product-card" th:each="prod : ${productos}">
+            <img th:src="${prod.imagen != null and !prod.imagen.isEmpty() ? prod.imagen : 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=600'}"
+                 th:alt="${prod.nombre}">
+            <h3 th:text="${prod.nombre}">Nombre</h3>
+            <p class="price" th:text="'$' + ${prod.precio}">$0.00</p>
+
+            <form th:action="@{/carrito/agregar}" method="POST">
+                <input type="hidden" name="idProducto" th:value="${prod.id}">
+                <input type="hidden" name="nombre" th:value="${prod.nombre}">
+                <input type="hidden" name="precio" th:value="${prod.precio}">
+                <input type="hidden" name="imagen" th:value="${prod.imagen}">
+                <button type="submit" class="add-btn" style="width: 100%; cursor: pointer;">Añadir</button>
+            </form>
+
+            <!-- Botón visible ÚNICAMENTE si el usuario es Admin (idRol == 1) -->
+            <div th:if="${session.usuarioLogueado != null and session.usuarioLogueado.idRol == 1}" style="margin-top: 8px;">
+                <a th:href="@{/admin/productos/eliminar/{id}(id=${prod.id})}"
+                   onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
+                   style="display: block; text-align: center; background-color: #d9534f; color: white; padding: 8px; border-radius: 5px; text-decoration: none; font-size: 0.9rem;">
+                    Eliminar
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2026 Angel's Beauty - Resalta tu brillo natural.</p>
+</footer>
+
+</body>
+</html>

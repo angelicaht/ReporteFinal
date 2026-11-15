@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Carrito | Angel's Beauty</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">Angel's Beauty</a>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/carrito">Carrito 🛒</a></li>
+    </ul>
+</nav>
+
+<section class="cart-section" style="padding: 100px 30px 40px; max-width: 800px; margin: 0 auto;">
+    <h2 class="section-title">Tu Bolsa de Compras</h2>
+
+    <div th:if="${carrito == null or carrito.isEmpty()}" style="text-align: center; padding: 50px;">
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">Tu carrito está vacío. ¡Ve a llenarlo de actitud!</p>
+        <a href="/" class="cta-btn">Ir a comprar</a>
+    </div>
+
+    <div th:if="${carrito != null and !carrito.isEmpty()}">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff; border: 2px solid #000;">
+            <thead>
+            <tr style="background: #FF1694; color: #fff; text-align: left;">
+                <th style="padding: 10px; border: 1px solid #000;">Producto</th>
+                <th style="padding: 10px; border: 1px solid #000;">Precio</th>
+                <th style="padding: 10px; border: 1px solid #000;">Cant.</th>
+                <th style="padding: 10px; border: 1px solid #000;">Subtotal</th>
+                <th style="padding: 10px; border: 1px solid #000;">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${carrito}">
+                <td style="padding: 10px; border: 1px solid #000;" th:text="${item.nombre}"></td>
+                <td style="padding: 10px; border: 1px solid #000;" th:text="'$' + ${item.precio}"></td>
+                <td style="padding: 10px; border: 1px solid #000;" th:text="${item.cantidad}"></td>
+                <td style="padding: 10px; border: 1px solid #000; font-weight: bold; color: #FF1694;" th:text="'$' + ${item.subtotal}"></td>
+                <td style="padding: 10px; border: 1px solid #000; text-align: center;">
+                    <a th:href="@{/carrito/eliminar/{id}(id=${item.idProducto})}" style="color: red; font-weight: bold; text-decoration: none;">X</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align: right; margin-bottom: 30px;">
+            <h3 style="font-size: 1.5rem;">Total: <span style="color: #FF1694;" th:text="'$' + ${total}"></span></h3>
+        </div>
+
+        <form th:action="@{/carrito/pagar}" method="POST" style="background: #fff; padding: 20px; border: 2px solid #000;">
+            <h3 style="margin-bottom: 15px;">Método de Pago</h3>
+            <select name="metodoPago" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #000; font-family: 'Montserrat', sans-serif;">
+                <option value="" disabled selected>Selecciona una opción...</option>
+                <option value="Efectivo">Efectivo (Pago a contraentrega)</option>
+                <option value="Tarjeta de Credito">Tarjeta de Crédito</option>
+                <option value="Tarjeta de Debito">Tarjeta de Débito</option>
+                <option value="Transferencia">Transferencia Bancaria</option>
+            </select>
+            <button type="submit" class="cta-btn" style="width: 100%; cursor: pointer;">Confirmar Pedido</button>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

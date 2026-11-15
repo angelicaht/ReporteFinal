@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Angel's Beauty</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<!-- Navegación Admin -->
+<nav class="navbar">
+    <a href="/" class="logo">Angel's Beauty (Admin)</a>
+    <ul class="nav-links">
+        <li><a href="/">Ver Tienda</a></li>
+        <li><a href="/logout">Cerrar Sesión</a></li>
+    </ul>
+</nav>
+
+<!-- Contenido Principal Panel Admin -->
+<section style="padding: 100px 30px 40px; max-width: 1000px; margin: 0 auto;">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Gestión de Productos</h2>
+
+        <!-- Botón para ir al formulario de agregar producto -->
+        <a href="/admin/productos/nuevo" class="cta-btn" style="text-decoration: none;">
+            + Agregar Nuevo Producto
+        </a>
+    </div>
+
+    <!-- Tabla o lista de productos existentes -->
+    <table style="width: 100%; border-collapse: collapse; background: #fff; border: 2px solid #000;">
+        <thead>
+        <tr style="background: #FF1694; color: #fff; text-align: left;">
+            <th style="padding: 10px; border: 1px solid #000;">ID</th>
+            <th style="padding: 10px; border: 1px solid #000;">Nombre</th>
+            <th style="padding: 10px; border: 1px solid #000;">Precio</th>
+            <th style="padding: 10px; border: 1px solid #000;">Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="prod : ${productos}">
+            <td style="padding: 10px; border: 1px solid #000;" th:text="${prod.idProducto}"></td>
+            <td style="padding: 10px; border: 1px solid #000;" th:text="${prod.nombre}"></td>
+            <td style="padding: 10px; border: 1px solid #000;" th:text="'$' + ${prod.precio}"></td>
+            <td style="padding: 10px; border: 1px solid #000;" th:text="${prod.stock}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 Angel's Beauty - Panel Administrativo</p>
+</footer>
+
+</body>
+</html>
